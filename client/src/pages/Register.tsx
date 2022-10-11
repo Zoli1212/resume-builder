@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { register } from '../api/api';
+import { NewUser } from '../types/types';
 
 export const Register = () => {
 
@@ -25,14 +28,19 @@ export const Register = () => {
 
     if(password === confirmPassword){
 
-      const userObj = { name, email, password, confirmPassword};
+      const userObj = { name, email, password, confirmPassword} as NewUser;
       try{
 
-        console.log(userObj);
-  
+        const response = await register(userObj);
+
+        console.log(response);
+
+        if(response.data.success){
+          toast.success(response.data.message);
+        }
       }catch(error){
 
-        console.log(error);
+        toast.error('Email already in use');
 
       }
     }else{
