@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
 export const Register = () => {
@@ -20,8 +21,26 @@ export const Register = () => {
   };
 
 
-  const register = () => {
-    const userObj = { name, email, password, confirmPassword};
+  const registerUser = async () => {
+
+    if(password === confirmPassword){
+
+      const userObj = { name, email, password, confirmPassword};
+      try{
+
+        console.log(userObj);
+  
+      }catch(error){
+
+        console.log(error);
+
+      }
+    }else{
+
+      toast.error('Passwords did not match!');
+
+    }
+
 
     
   };
@@ -40,7 +59,7 @@ export const Register = () => {
 
         <div className="flex justify-between items-center">
           <Link className="text-primary" to={'/login'}>Already has an account? logIn here</Link>
-          <button className="py-1 px-5 text-white bg-primary" onClick={register}>REGISTER</button>
+          <button className="py-1 px-5 text-white bg-primary" onClick={registerUser}>REGISTER</button>
         </div>
       </div>
     </div>

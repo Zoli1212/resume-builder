@@ -6,16 +6,20 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { NoMatch } from './pages/NoMatch';
+import { Toaster } from 'react-hot-toast';
 
-function App() {
+export const  App : React.FC = ()=> {
   return (
-    <Routes>
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+      <Routes>
       <Route path={'/'} element={<Home />} />
       <Route path={'login'} element={<Login />} />
       <Route path={'register'} element={<Register />} />
       <Route path={'*'} element={<NoMatch />} />
     </Routes>
+    </>
   );
-}
+};
 
-export default App;
+

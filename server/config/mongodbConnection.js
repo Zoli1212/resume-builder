@@ -1,10 +1,14 @@
 const db = require("./db.config.js");
 const mongoose = require('mongoose')
 
+
+const MONGO_URI = process.env.MONGO_URI
+
 const connectDB = async () => {
   try {
     console.log(db.url)
-    const conn = await mongoose.connect(db.url)
+    const conn = await mongoose.connect(MONGO_URI)
+    //const conn = await mongoose.connect(db.url)
 
     console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline)
   } catch (error) {
@@ -14,4 +18,3 @@ const connectDB = async () => {
 }
 
 module.exports = connectDB
-console.log(db.url);
