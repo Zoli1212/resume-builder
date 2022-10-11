@@ -1,11 +1,13 @@
 const express = require('express')
 const User = require('../models/userModel')
 
+const bcrypt = require('bcrypt')
+
 const router = express.Router()
 
 router.post('/register', async (req, res) => {
 
-    const { email } = req.body
+    const { email, password } = req.body
 
     try{
 
@@ -17,6 +19,11 @@ router.post('/register', async (req, res) => {
             return res.status(200).json({ success: false, message: 'User Already exists'})
 
         }
+
+        
+        const salt = await bcrypt.genSalt(10)
+        const encryptedPassword = await bcrypt.hash(password, salt)
+        req.body.password = encryptedPassword
 
         const newUser = new User(req.body)
 
@@ -32,15 +39,30 @@ router.post('/register', async (req, res) => {
 })
 router.post('/login', async (req, res) => {
 
-
+    
+    
     const { email, password } = req.body
+   
 
     try{
 
-        const user = await User.findOne({ email, password})
+        const user = await User.findOne({ email })
         if(user){
 
-            res.status(200).json({ success: true, message: 'User logged successfully ', data: user})
+
+            const passwordsMatched = await bcrypt.compare(password, user.password)
+
+        
+
+            if(passwordsMatched){
+
+                res.status(200).json({ success: true, message: 'User logged successfully ', data: user})
+            }else{
+                
+                res.status(400).json({ success: false, message: 'Incorrect password ', data: user})
+
+            }
+
         }else{
 
             res.status(400).json({success: false, message: 'user logging failed', data: null})
