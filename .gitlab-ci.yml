@@ -1,0 +1,49 @@
+stages:
+ - test 
+ - build
+ - deploy 
+
+
+run_unit_test:
+  stage: test
+  before_script:
+    - echo "preparing test data"
+  script:
+    - echo "unning tests..."
+  after_script:
+    - echo "cleaning up temporary files"
+
+run_lint_tests:
+  stage: test
+  before_script:
+    - echo "preparing test data"
+  script:
+    - echo "unning tests..."
+  after_script:
+    - echo "cleaning up temporary files"
+
+
+build_image:
+  stage: build
+  script:
+    - echo "building artifacts"
+
+push_image:
+  stage: build
+  needs:
+    - build_image
+
+  script:
+    - echo "push image"
+
+deploy_to_prod:
+  stage: deploy
+  only: 
+    - main
+  script:
+    - echo "deploy to prod"
+  when: manual
+
+
+
+
