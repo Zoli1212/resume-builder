@@ -8,8 +8,17 @@ export type NewUser = {
 
 
 }
+export type User = {
 
-export type RegistrationResponse = {
+    name?: string,
+    email: string,
+    password: string,
+    confirmPassword?: string
+
+
+}
+
+export type AuthResponse = {
 
     data: {
 
@@ -17,8 +26,5 @@ export type RegistrationResponse = {
         data: NewUser | null,
         message: string
     }
-
-
-
 
 }

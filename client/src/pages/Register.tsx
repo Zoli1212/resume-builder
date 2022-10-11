@@ -62,8 +62,8 @@ export const Register = () => {
         <h1 className="font-semibold text-3xl text-primary">Welcome To CV - Builder</h1>
         <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='name' name='name' value={name} onChange={onChange}/>
         <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='email' name='email' value={email} onChange={onChange} />
-        <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='password' name='password' value={password} onChange={onChange}/>
-        <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='confirm password' name='confirmPassword' value={confirmPassword} onChange={onChange}/>
+        <input type="password" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='password' name='password' value={password} onChange={onChange}/>
+        <input type="password" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='confirm password' name='confirmPassword' value={confirmPassword} onChange={onChange}/>
 
         <div className="flex justify-between items-center">
           <Link className="text-primary" to={'/login'}>Already has an account? logIn here</Link>

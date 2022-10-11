@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { login } from '../api/api';
 
 export const Login = () => {
 
@@ -20,8 +22,23 @@ export const Login = () => {
   };
 
 
-  const login = () => {
+  const loginUser = async () => {
     const loginUserObj = {  email, password };
+
+    try{
+
+      const response = await login(loginUserObj);
+
+      console.log(response);
+
+      if(response.data.success){
+        toast.success(response.data.message);
+      }
+    }catch(error){
+
+      toast.error('Email or Password did not match');
+
+    }
 
     console.log(loginUserObj);
   };
@@ -35,12 +52,12 @@ export const Login = () => {
         <h1 className="font-semibold text-3xl text-primary">Welcome To CV - Builder</h1>
        
         <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='email' name='email' value={email} onChange={onChange} />
-        <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='password' name='password' value={password} onChange={onChange}/>
+        <input type="password" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='password' name='password' value={password} onChange={onChange}/>
        
 
         <div className="flex justify-between items-center">
           <Link className="text-primary" to={'/register'}>Don't has an account? signUp here</Link>
-          <button className="py-1 px-5 text-white bg-primary" onClick={login}>LOGIN</button>
+          <button className="py-1 px-5 text-white bg-primary" onClick={loginUser}>LOGIN</button>
         </div>
       </div>
     </div>
