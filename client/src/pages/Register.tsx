@@ -30,15 +30,20 @@ export const Register = () => {
 
       const userObj = { name, email, password, confirmPassword} as NewUser;
       try{
+        toast.loading('Loading...');
 
         const response = await register(userObj);
 
-        console.log(response);
+        toast.dismiss();
+
 
         if(response.data.success){
           toast.success(response.data.message);
+        }else{
+          toast.error(response.data.message);
         }
       }catch(error){
+        toast.dismiss();
 
         toast.error('Email already in use');
 

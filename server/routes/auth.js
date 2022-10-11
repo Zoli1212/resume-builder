@@ -5,7 +5,18 @@ const router = express.Router()
 
 router.post('/register', async (req, res) => {
 
+    const { email } = req.body
+
     try{
+
+
+        const existingUser = await User.findOne({ email })
+
+        if(existingUser){
+
+            return res.status(200).json({ success: false, message: 'User Already exists'})
+
+        }
 
         const newUser = new User(req.body)
 
@@ -29,10 +40,12 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ email, password})
         if(user){
 
-            res.status(200).json({ success: true, message: 'User logged in successfully ', data: user})
+            res.status(200).json({ success: true, message: 'User logged successfully ', data: user})
+        }else{
+
+            res.status(400).json({success: false, message: 'user logging failed', data: null})
         }
 
-        res.status(400).json({success: false, message: 'user logging failed', data: null})
 
     }
 

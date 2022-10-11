@@ -27,14 +27,18 @@ export const Login = () => {
 
     try{
 
+      toast.loading('Loading...');
+
       const response = await login(loginUserObj);
 
-      console.log(response);
+      toast.dismiss();
 
       if(response.data.success){
         toast.success(response.data.message);
       }
     }catch(error){
+
+      toast.dismiss();
 
       toast.error('Email or Password did not match');
 
