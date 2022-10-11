@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { login } from '../api/api';
+import { useNavigate} from 'react-router-dom';
 
 export const Login = () => {
-
+  
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
   
     email: '',
@@ -35,6 +37,8 @@ export const Login = () => {
 
       if(response.data.success){
         toast.success(response.data.message);
+        localStorage.setItem('user', JSON.stringify(loginUserObj));
+        navigate('/');
       }
     }catch(error){
 
