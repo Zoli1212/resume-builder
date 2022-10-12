@@ -64,18 +64,19 @@ router.post('/login', async (req, res) => {
             if(passwordsMatched){
                 
                 
-                const dataToBeSendToFrontend = {
+                const dataToBeSentToFrontend = {
                     _id: user._id,
                     email: user.email,
-                    name: user.name
-                }
-                console.log(dataToBeSendToFrontend)
-                console.log(SECRET_KEY)
-
-                const token = jwt.sign(dataToBeSendToFrontend, SECRET_KEY, { expiresIn: 60 *60} )
-                console.log(token)
-
-                res.status(200).json({ success: true, message: 'User logged successfully ', data: token})
+                    name: user.name,
+                  };
+                  const token = jwt.sign(dataToBeSentToFrontend, process.env.JWT_SECRET, {
+                    expiresIn: 60 * 60,
+                  });
+                  res.status(200).send({
+                    success: true,
+                    message: "User Login Successfull",
+                    data: token,
+                  });
             }else{
                 
                 res.status(400).json({ success: false, message: 'Incorrect password ', data: user})

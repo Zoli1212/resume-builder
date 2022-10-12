@@ -1,17 +1,79 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { User } from '../types/types';
 
 export const Home = () => {
 
+    const [userInfo, setUserInfo] = useState<User>({  
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''}  );
+    const navigate = useNavigate();
+
+
+    const getData = async () => {
+        toast.loading('Loading...');
+        try {
+        const userToken = localStorage.getItem('user');
+        let token;
+        if(userToken){
+
+            token = JSON.parse(userToken);
+        }
+          const response = await axios.get('/api/user/get-user-info', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          toast.dismiss();
+          if (response.data.success) {
+
+            console.log(response.data.data, '!');
+            setUserInfo(prevState => { return {...prevState, name: response.data.data.name, email: response.data.data.email};});
+          } else {
+           
+            toast.error('Something went wrong');
+          }
+        } catch (error) {
+         
+          toast.error('Something went wrong');
+        }
+      };
+
+      useEffect(() => {
+        if (userInfo.name === '' ) {
+          getData();
+        }
+      }, [userInfo]);
 
 
 
-  return (
-    <div className='flex items-center justify-center min-h-screen'>
-        <div className="text-5xl font-semibold text-primary">
-            Home
 
-        </div>
-    </div>
-  );
+ 
+      return (
+        
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="flex flex-col space-y-5">
+              <h1 className="text-5xl font-semibold text-primary">
+                {JSON.stringify(userInfo.name)}
+              </h1>
+              <h1 className="text-5xl font-semibold text-primary">
+                {JSON.stringify(userInfo.email)}
+              </h1>
+              <button
+                className="border border-primary px-10 py-2 text-primary max-w-max"
+                onClick={() => {
+                  localStorage.clear();
+                  navigate('/login');
+                }}
+              >
+                LOGOUT
+              </button>
+            </div>
+          </div>
+        );
+      
 };
