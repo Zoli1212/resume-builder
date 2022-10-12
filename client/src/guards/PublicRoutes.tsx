@@ -12,11 +12,11 @@ export const PublicRoutes = ({ children }: PublicRoutesProps) => {
         const user = localStorage.getItem('user');
 
 
-        if(user !== '' && user){
-            return children;
+        if(user){
+            return <Navigate to={'/'} />;
         }
+        return children;
         
-        return <Navigate to={'/login'} />;
 
     
 };
