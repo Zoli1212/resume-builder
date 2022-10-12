@@ -8,6 +8,7 @@ import { Register } from './pages/Register';
 import { NoMatch } from './pages/NoMatch';
 import { Toaster } from 'react-hot-toast';
 import { AuthGuard } from './guards/AuthGuard';
+import { PublicRoutes } from './guards/PublicRoutes';
 
 export const  App : React.FC = ()=> {
   return (
@@ -15,8 +16,8 @@ export const  App : React.FC = ()=> {
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
       <Route path={'/'} element={<AuthGuard><Home /></AuthGuard>} />
-      <Route path={'login'} element={<Login />} />
-      <Route path={'register'} element={<Register />} />
+      <Route path={'login'} element={<PublicRoutes><Login /></PublicRoutes>} />
+      <Route path={'register'} element={<PublicRoutes><Register /></PublicRoutes>} />
       <Route path={'*'} element={<NoMatch />} />
     </Routes>
     </>

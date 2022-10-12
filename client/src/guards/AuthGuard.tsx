@@ -12,7 +12,7 @@ export const AuthGuard  = ({ children }: AuthGuardProps) => {
         const user = localStorage.getItem('user');
 
 
-        if(!user){
+        if(!user || user !== ''){
             return <Navigate to={'/login'} />;
         }
 
