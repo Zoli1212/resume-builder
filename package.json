@@ -32,7 +32,8 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.6.5"
+    "mongoose": "^6.6.5",
+    "nodemailer": "^6.8.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.40.0",
