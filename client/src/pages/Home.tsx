@@ -35,11 +35,15 @@ export const Home = () => {
             setUserInfo(prevState => { return {...prevState, name: response.data.data.name, email: response.data.data.email};});
           } else {
            
+            localStorage.removeItem('user');
+            navigate('/login');
             toast.error('Something went wrong');
           }
         } catch (error) {
          
-          toast.error('Something went wrong');
+            localStorage.removeItem('user');
+            navigate('/login');
+            toast.error('Something went wrong');
         }
       };
 
@@ -58,10 +62,10 @@ export const Home = () => {
           <div className="flex items-center justify-center min-h-screen">
             <div className="flex flex-col space-y-5">
               <h1 className="text-5xl font-semibold text-primary">
-                {JSON.stringify(userInfo.name)}
+                {userInfo.name}
               </h1>
               <h1 className="text-5xl font-semibold text-primary">
-                {JSON.stringify(userInfo.email)}
+                {userInfo.email}
               </h1>
               <button
                 className="border border-primary px-10 py-2 text-primary max-w-max"
