@@ -2,8 +2,11 @@ const express = require('express')
 const User = require('../models/userModel')
 
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const router = express.Router()
+
+const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 router.post('/register', async (req, res) => {
 
@@ -55,6 +58,15 @@ router.post('/login', async (req, res) => {
         
 
             if(passwordsMatched){
+
+
+                const dataToBeSendToFrontend = {
+                    _id: user._id,
+                    email: user.email,
+                    name: user.name
+                }
+
+                const token = jwt.sign(dataToBeSendToFrontend, SECRET_KEY, { expires: 60 *60} )
 
                 res.status(200).json({ success: true, message: 'User logged successfully ', data: user})
             }else{
