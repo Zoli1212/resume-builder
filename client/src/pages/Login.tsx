@@ -37,7 +37,7 @@ export const Login = () => {
 
       if(response.data.success){
         toast.success(response.data.message);
-        localStorage.setItem('user', JSON.stringify(loginUserObj));
+        localStorage.setItem('user', JSON.stringify(response.data.data));
         navigate('/');
       }
     }catch(error){

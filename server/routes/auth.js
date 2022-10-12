@@ -6,23 +6,23 @@ const jwt = require('jsonwebtoken')
 
 const router = express.Router()
 
-const SECRET_KEY = process.env.JWT_SECRET_KEY
+
 
 router.post('/register', async (req, res) => {
 
     const { email, password } = req.body
-
+    
     try{
 
-
+        
         const existingUser = await User.findOne({ email })
 
         if(existingUser){
 
             return res.status(200).json({ success: false, message: 'User Already exists'})
-
+            
         }
-
+        
         
         const salt = await bcrypt.genSalt(10)
         const encryptedPassword = await bcrypt.hash(password, salt)
@@ -43,32 +43,39 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
 
     
+    const SECRET_KEY = process.env.JWT_SECRET_KEY
     
     const { email, password } = req.body
-   
+    
 
     try{
 
         const user = await User.findOne({ email })
+
+        console.log(user)
         if(user){
 
 
             const passwordsMatched = await bcrypt.compare(password, user.password)
 
-        
-
+            
+            
+            
             if(passwordsMatched){
-
-
+                
+                
                 const dataToBeSendToFrontend = {
                     _id: user._id,
                     email: user.email,
                     name: user.name
                 }
+                console.log(dataToBeSendToFrontend)
+                console.log(SECRET_KEY)
 
-                const token = jwt.sign(dataToBeSendToFrontend, SECRET_KEY, { expires: 60 *60} )
+                const token = jwt.sign(dataToBeSendToFrontend, SECRET_KEY, { expiresIn: 60 *60} )
+                console.log(token)
 
-                res.status(200).json({ success: true, message: 'User logged successfully ', data: user})
+                res.status(200).json({ success: true, message: 'User logged successfully ', data: token})
             }else{
                 
                 res.status(400).json({ success: false, message: 'Incorrect password ', data: user})
