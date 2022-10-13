@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const router = express.Router()
+const sendEmail = require('../utils/sendEmail')
 
 
 
@@ -30,7 +31,8 @@ router.post('/register', async (req, res) => {
 
         const newUser = new User(req.body)
 
-        await newUser.save()
+        const result = await newUser.save()
+        await sendEmail(result, 'verify-email')
         res.status(200).send({success: true, message: 'user successfully registered'})
 
     }

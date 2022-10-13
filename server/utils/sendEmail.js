@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const Token = require("../models/tokenModel");
 
 module.exports = async (user, mailType) => {
+
+  const { EMAIL_APP_USERNAME, EMAIL_APP_PASSWORD} = process.env
+
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -10,8 +13,8 @@ module.exports = async (user, mailType) => {
       port: 587,
       secure: true,
       auth: {
-        user: "prosight15@gmail.com",
-        pass: "Prosight1515",
+        user: EMAIL_APP_USERNAME,
+        pass: EMAIL_APP_PASSWORD,
       },
     });
 
