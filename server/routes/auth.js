@@ -39,7 +39,7 @@ router.post('/register', async (req, res) => {
 
         const result = await newUser.save()
         await sendEmail(result, 'verifyemail')
-        res.status(200).send({success: true, message: 'user successfully registered'})
+        res.status(200).send({success: true, message: 'Registration successfull, please verify email'})
 
     }
 
@@ -54,6 +54,8 @@ router.post('/login', async (req, res) => {
     const SECRET_KEY = process.env.JWT_SECRET_KEY
     
     const { email, password } = req.body
+
+    console.log(req.body)
 
 
     if(!email || !password){
@@ -73,21 +75,29 @@ router.post('/login', async (req, res) => {
             const passwordsMatched = await bcrypt.compare(password, user.password)
             
             if(passwordsMatched){
+
+                if(user.isVerified){
+                    const dataToBeSentToFrontend = {
+                        _id: user._id,
+                        email: user.email,
+                        name: user.name,
+                      };
+                      const token = jwt.sign(dataToBeSentToFrontend, process.env.JWT_SECRET, {
+                        expiresIn: 60 * 60,
+                      });
+                      res.status(200).send({
+                        success: true,
+                        message: "User Login Successfull",
+                        data: token,
+                      });
+                }else{
+                    res
+                    .status(200)
+                    .send({ success: false, message: "Email not verified" });
+                }
                 
                 
-                const dataToBeSentToFrontend = {
-                    _id: user._id,
-                    email: user.email,
-                    name: user.name,
-                  };
-                  const token = jwt.sign(dataToBeSentToFrontend, process.env.JWT_SECRET, {
-                    expiresIn: 60 * 60,
-                  });
-                  res.status(200).send({
-                    success: true,
-                    message: "User Login Successfull",
-                    data: token,
-                  });
+             
             }else{
                 
                 res.status(400).json({ success: false, message: 'Incorrect password ', data: user})
@@ -96,7 +106,7 @@ router.post('/login', async (req, res) => {
 
         }else{
 
-            res.status(400).json({success: false, message: 'user logging failed', data: null})
+            res.status(400).json({success: false, message: 'user does not exist', data: null})
         }
 
 
@@ -111,14 +121,10 @@ router.post('/login', async (req, res) => {
 
 router.post('/verifyemail', async(req, res) => {
 
-    console.log(req.body.token)
-
-    
-
     try{
 
         const tokenData = await Token.findOne({ token: req.body.token })
-        console.log(tokenData)
+       
         if(tokenData){
             
             await User.findOneAndUpdate({ _id: tokenData.userid, isVerified: true})

@@ -34,17 +34,21 @@ export const Login = () => {
       const response = await login(loginUserObj);
 
       toast.dismiss();
+      console.log(response);
 
       if(response.data.success){
         toast.success(response.data.message);
         localStorage.setItem('user', JSON.stringify(response.data.data));
         navigate('/');
+      }else{
+        console.log('here');
+        toast.error(response.data.message);
       }
     }catch(error){
 
       toast.dismiss();
 
-      toast.error('Email or Password did not match');
+      toast.error('Something went wrong');
 
     }
 
