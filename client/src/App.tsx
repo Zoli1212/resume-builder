@@ -1,7 +1,6 @@
-import React, { Suspense} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -12,20 +11,53 @@ import { PublicRoutes } from './guards/PublicRoutes';
 import { VerifyEmail } from './pages/VerifyEmail';
 import { ResetPassword } from './pages/ResetPassword';
 
-export const  App : React.FC = ()=> {
+export const App: React.FC = () => {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
-      <Route path={'/'} element={<AuthGuard><Home /></AuthGuard>} />
-      <Route path={'login'} element={<PublicRoutes><Login /></PublicRoutes>} />
-      <Route path={'register'} element={<PublicRoutes><Register /></PublicRoutes>} />
-      <Route path={'verifyemail/:token'} element={<PublicRoutes><VerifyEmail /></PublicRoutes>} />
-      <Route path={'resetpassword/:token'} element={<PublicRoutes><ResetPassword /></PublicRoutes>} />
-      <Route path={'*'} element={<NoMatch />} />
-    </Routes>
+        <Route
+          path={'/'}
+          element={
+            <AuthGuard>
+              <Home />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path={'login'}
+          element={
+            <PublicRoutes>
+              <Login />
+            </PublicRoutes>
+          }
+        />
+        <Route
+          path={'register'}
+          element={
+            <PublicRoutes>
+              <Register />
+            </PublicRoutes>
+          }
+        />
+        <Route
+          path={'verifyemail/:token'}
+          element={
+            <PublicRoutes>
+              <VerifyEmail />
+            </PublicRoutes>
+          }
+        />
+        <Route
+          path={'resetpassword/:token'}
+          element={
+            <PublicRoutes>
+              <ResetPassword />
+            </PublicRoutes>
+          }
+        />
+        <Route path={'*'} element={<NoMatch />} />
+      </Routes>
     </>
   );
 };
-
-
