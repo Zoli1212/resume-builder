@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams, useNavigate} from 'react-router-dom';
+import { resetPasswordCall } from '../api/api';
 
-export const ForgotPassword = () => {
+export const ResetPassword = () => {
   
  
   const [formData, setFormData] = useState({
@@ -35,10 +36,10 @@ export const ForgotPassword = () => {
 
     try{
 
-      toast.loading('Loading...')
+      toast.loading('Loading...');
 
 
-      const response = await axios.post('/api/auth/resetpassword', { password: formData.password, token: params.token });
+      const response = await resetPasswordCall(formData.password, params.token);
       if(response.data.success){
 
         toast.success('Password reset successfully');

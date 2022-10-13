@@ -18,3 +18,8 @@ export async function verifyTokenCall(token: any): Promise<AuthResponse> {
     return await axios.post('/api/auth/verifyemail', {token});
     
 }
+
+export async function resetPasswordCall(password: string, token:any): Promise<AuthResponse> {
+    return axios.post('/api/auth/resetpassword', { password, token });
+
+}
