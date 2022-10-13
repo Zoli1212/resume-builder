@@ -55,8 +55,7 @@ router.post('/login', async (req, res) => {
     
     const { email, password } = req.body
 
-    console.log(req.body)
-
+   
 
     if(!email || !password){
 
@@ -151,8 +150,7 @@ router.post('/send-reset-password-link', async(req, res) => {
     try{
 
         const result = await User.findOne({ email })
-        console.log(req.body, '*')
-        console.log(result, '!')
+       
 
         await sendEmail(result, 'resetpassword');
 
@@ -167,6 +165,14 @@ router.post('/send-reset-password-link', async(req, res) => {
 });
 
 router.post("/resetpassword", async (req, res) => {
+
+    const token = req.body.token
+
+    if(!token){
+
+        res.send({ success: false, message: "Invalid token" });
+
+    }
     try {
      
       const tokenData = await Token.findOne({ token: req.body.token });
