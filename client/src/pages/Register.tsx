@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { register } from '../api/api';
-import { NewUser } from '../types/types';
+import {  User } from '../types/types';
 
 export const Register = () => {
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<User>({
     name: '',
     email: '',
     password: '',
@@ -28,7 +27,7 @@ export const Register = () => {
 
     if(password === confirmPassword){
 
-      const userObj = { name, email, password, confirmPassword} as NewUser;
+      const userObj = { name, email, password, confirmPassword} as User;
       try{
         toast.loading('Loading...');
 
@@ -53,13 +52,9 @@ export const Register = () => {
       toast.error('Passwords did not match!');
 
     }
-
-
     
   };
 
-
-  
 
   return (
     <div className="flex justify-center items-center h-screen">

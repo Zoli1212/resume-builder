@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import axios from 'axios';
 import { verifyTokenCall } from '../api/api';
-import { toNamespacedPath } from 'node:path/win32';
+
 
 export const VerifyEmail = () => {
 

@@ -11,7 +11,6 @@ export const AuthGuard  = ({ children }: AuthGuardProps) => {
     
         const user = localStorage.getItem('user');
 
-
         if(user && user !== ''){
             return children;
         }

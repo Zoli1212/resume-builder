@@ -11,7 +11,15 @@ const Token = require('../models/tokenModel')
 
 router.post('/register', async (req, res) => {
 
-    const { email, password } = req.body
+    const { email, password, name } = req.body
+
+    if(!email || !password){
+
+        res.status(500).json({ success: false, message: 'Password and Email required'})
+
+    }
+
+
     
     try{
 
@@ -48,6 +56,13 @@ router.post('/login', async (req, res) => {
     const SECRET_KEY = process.env.JWT_SECRET_KEY
     
     const { email, password } = req.body
+
+
+    if(!email || !password){
+
+        res.status(500).json({ success: false, message: 'Password and Email Required ', data: null})
+
+    }
     
 
     try{

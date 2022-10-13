@@ -1,9 +1,8 @@
-import { User } from './../types/types';
 import axios from 'axios';
-import { NewUser, AuthResponse } from '../types/types';
+import { User, AuthResponse } from '../types/types';
 
 
-export async function register(newUser: NewUser) :Promise<AuthResponse>{
+export async function register(newUser: User) :Promise<AuthResponse>{
 
     return await axios.post('api/auth/register', newUser);
 }
