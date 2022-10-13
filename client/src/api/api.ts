@@ -15,6 +15,6 @@ export async function login(loginUser: User) :Promise<AuthResponse>{
 
 export async function verifyTokenCall(token: any): Promise<AuthResponse> {
 
-    return await axios.post('/api/auth/verify-email', {token});
+    return await axios.post('/api/auth/verifyemail', {token});
     
 }

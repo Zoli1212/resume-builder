@@ -18,8 +18,6 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ success: false, message: 'Password and Email required'})
 
     }
-
-
     
     try{
 
@@ -40,7 +38,7 @@ router.post('/register', async (req, res) => {
         const newUser = new User(req.body)
 
         const result = await newUser.save()
-        await sendEmail(result, 'verify-email')
+        await sendEmail(result, 'verifyemail')
         res.status(200).send({success: true, message: 'user successfully registered'})
 
     }
@@ -69,14 +67,10 @@ router.post('/login', async (req, res) => {
 
         const user = await User.findOne({ email })
 
-        console.log(user)
         if(user){
 
 
             const passwordsMatched = await bcrypt.compare(password, user.password)
-
-            
-            
             
             if(passwordsMatched){
                 
@@ -115,14 +109,19 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.post('verify-email', async(req, res) => {
+router.post('/verifyemail', async(req, res) => {
+
+    console.log(req.body.token)
+
+    
 
     try{
 
+        const tokenData = await Token.findOne({ token: req.body.token })
+        console.log(tokenData)
         if(tokenData){
             
-            const tokenData = Token.findOne({ token: req.body.token })
-            await User.findOneAndUpdate({ _id: tokenData, emailVerified: true})
+            await User.findOneAndUpdate({ _id: tokenData.userid, isVerified: true})
             await Token.findOneAndDelete({ token: req.body.token})
             res.send({ success: true, message: 'Email verified successfully'})
         }else{

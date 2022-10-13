@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { verifyTokenCall } from '../api/api';
@@ -11,6 +11,8 @@ export const VerifyEmail = () => {
 
     const params = useParams();
 
+    const shouldVerify = useRef(true);
+
 
     const verifyToken = async() => {
         try{
@@ -19,6 +21,8 @@ export const VerifyEmail = () => {
 
 
             const response =await verifyTokenCall(params.token);
+            console.log(params.token);
+            console.log(response);
 
             if(response.data.success){
                 setEmailVerified('true');
@@ -36,8 +40,13 @@ export const VerifyEmail = () => {
     };
     useEffect(() => {
 
+        if(shouldVerify.current){
+            shouldVerify.current = false;
 
-        verifyToken();
+            verifyToken();
+        }
+
+
 
     }, []);
 
