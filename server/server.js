@@ -18,10 +18,17 @@ app.use(express.json())
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static())
-
-}
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/build')));
+  
+    app.get('*', (req, res) =>
+      res.sendFile(
+        path.resolve(__dirname, '../', 'client', 'build', 'index.html')
+      )
+    );
+  } else {
+    app.get('/', (req, res) => res.send('Please set to production'));
+  }
 
 
 app.listen(PORT, () => console.log(`server is listening on port ${PORT} `))
