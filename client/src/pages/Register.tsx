@@ -59,6 +59,13 @@ export const Register = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-[400px] flex space-y-5 flex-col p-5 shadow-lg border border-gray-300">
+      <div className="flex flex-wrap justify-center">
+    <img
+    src="https://st.depositphotos.com/1008768/3377/i/600/depositphotos_33777219-stock-photo-register-here-sign.jpg"
+    className="p-1 bg-white border rounded max-w-sm"
+    alt="..."
+    />
+</div>
         <h1 className="font-semibold text-3xl text-primary">Welcome To CV - Builder</h1>
         <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='name' name='name' value={name} onChange={onChange}/>
         <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='email' name='email' value={email} onChange={onChange} />

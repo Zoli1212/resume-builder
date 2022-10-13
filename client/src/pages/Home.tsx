@@ -59,7 +59,12 @@ export const Home = () => {
  
       return (
         
-          <div className="flex items-center justify-center min-h-screen">
+          <div className="flex flex-col items-center justify-center min-h-screen">
+             <img
+              src="https://venngage-wordpress.s3.amazonaws.com/uploads/2018/06/infographic-resume-template-header.png"
+              className="p-1 bg-white border rounded max-w-sm"
+              alt="..."
+              />
             <div className="flex flex-col space-y-5">
               <h1 className="text-5xl font-semibold text-primary">
                 {userInfo.name}

@@ -79,6 +79,13 @@ export const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       {!showForgotPassword ?  (<div className="w-[400px] flex space-y-5 flex-col p-5 shadow-lg border border-gray-300">
+      <img
+    src="https://pepperdine.starrezhousing.com/StarRezPortalX/File/GetImage?imageName=Login%20Here.png&tableName=PortalPageWidget&tableID=100&dateCreatedTicks=637457199798410716&hash=0DAFD659"
+    className="p-1 bg-white border rounded max-w-sm"
+    alt="..."
+    />
+        
+
         <h1 className="font-semibold text-3xl text-primary">Welcome To CV - Builder</h1>
        
         <input type="text" className="py-1 px-3 border-2 border-gray-500 rounded focus:outline-none w-full" placeholder='email' name='email' value={email} onChange={onChange} />
