@@ -42,7 +42,7 @@ export const ResetPassword = () => {
       const response = await resetPasswordCall(formData.password, params.token);
       if(response.data.success){
 
-        toast.success('Password reset successfully');
+        toast.success(response.data.message);
         navigate('/login');
       }else{
         toast.error('Expired or invalid link');

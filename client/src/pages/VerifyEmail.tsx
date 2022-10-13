@@ -21,8 +21,7 @@ export const VerifyEmail = () => {
 
 
             const response =await verifyTokenCall(params.token);
-            console.log(params.token);
-            console.log(response);
+           
 
             if(response.data.success){
                 setEmailVerified('true');

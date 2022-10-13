@@ -142,4 +142,47 @@ router.post('/verifyemail', async(req, res) => {
     }
 })
 
+
+router.post('/send-reset-password-link', async(req, res) => {
+
+    const { email } = req.body
+
+
+    try{
+
+        const result = await User.findOne({ email })
+        console.log(req.body, '*')
+        console.log(result, '!')
+
+        await sendEmail(result, 'resetpassword');
+
+        res.send({ success: true, message: 'Password reset link set to your email successfully'})
+
+
+    }catch(error){
+
+        res.status(500).send(error)
+
+    }
+});
+
+router.post("/resetpassword", async (req, res) => {
+    try {
+     
+      const tokenData = await Token.findOne({ token: req.body.token });
+      if (tokenData) {
+        const password = req.body.password;
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        await User.findOneAndUpdate({ _id: tokenData.userid, password: hashedPassword });
+        await Token.findOneAndDelete({ token: req.body.token });
+        res.send({ success: true, message: "Password reset successfull" });
+      } else {
+        res.send({ success: false, message: "Invalid token" });
+      }
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  });
+
 module.exports = router

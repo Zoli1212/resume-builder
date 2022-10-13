@@ -23,3 +23,9 @@ export async function resetPasswordCall(password: string, token:any): Promise<Au
     return axios.post('/api/auth/resetpassword', { password, token });
 
 }
+
+export async function sendForgotPasswordLink(email: string): Promise<AuthResponse> {
+   return axios.post('/api/auth/send-reset-password-link', {
+        email,
+      });
+}
