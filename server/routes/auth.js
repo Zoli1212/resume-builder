@@ -108,6 +108,7 @@ router.post('verify-email', async(req, res) => {
             
             const tokenData = Token.findOne({ token: req.body.token })
             await User.findOneAndUpdate({ _id: tokenData, emailVerified: true})
+            await Token.findOneAndDelete({ token: req.body.token})
             res.send({ success: true, message: 'Email verified successfully'})
         }else{
             res.send({ success: false, message: 'Invalid token '})
