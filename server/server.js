@@ -9,7 +9,7 @@ require('dotenv').config()
 const app = express()
 const connectDB = require('./config/mongodbConnection');
 
-const PORT = process.env.NODE_LOCAL_PORT
+const PORT = process.env.NODE_LOCAL_PORT || 5000
 
 connectDB()
 
