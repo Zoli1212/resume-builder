@@ -11,7 +11,7 @@ const connectDB = require('./config/mongodbConnection');
 
 const PORT = process.env.NODE_LOCAL_PORT || 5000
 
-const DEP_ENV = process.env.NODE_ENV || 'production'
+
 
 connectDB()
 
@@ -20,7 +20,7 @@ app.use(express.json())
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 
-if (true) {
+if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));
   
     app.get('*', (req, res) =>
