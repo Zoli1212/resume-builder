@@ -1,10 +1,23 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { verifyTokenCall } from '../api/api';
 
 export const VerifyEmail = () => {
   const [emailVerified, setEmailVerified] = useState<string>('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    if(emailVerified === 'true'){
+
+      setTimeout(() => {
+        navigate('/login');
+
+      }, 2000);
+    }
+
+  }, [emailVerified]);
 
   const params = useParams();
 
