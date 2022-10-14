@@ -29,7 +29,7 @@ export const ResetPassword = () => {
     try {
       toast.loading('Loading...');
 
-      const response = await resetPasswordCall(formData.password, params.token);
+      const response = await resetPasswordCall(formData.password, params.token!);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/login');
