@@ -20,7 +20,7 @@ app.use(express.json())
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 
-if (DEP_ENV === 'production') {
+if (true) {
     app.use(express.static(path.join(__dirname, '../client/build')));
   
     app.get('*', (req, res) =>
