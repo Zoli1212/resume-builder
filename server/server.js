@@ -11,6 +11,8 @@ const connectDB = require('./config/mongodbConnection');
 
 const PORT = process.env.NODE_LOCAL_PORT || 5000
 
+const DEP_ENV = process.env.NODE_ENV || 'production'
+
 connectDB()
 
 app.use(express.json())
@@ -18,7 +20,7 @@ app.use(express.json())
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 
-if (process.env.NODE_ENV === 'production') {
+if (DEP_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));
   
     app.get('*', (req, res) =>
@@ -31,4 +33,4 @@ if (process.env.NODE_ENV === 'production') {
   }
 
 
-app.listen(PORT, () => console.log(`server is listening on port ${PORT} `))
+app.listen(PORT, '0.0.0.0');
