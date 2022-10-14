@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Navigate, useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { verifyTokenCall } from '../api/api';
 
 export const VerifyEmail = () => {
   const [emailVerified, setEmailVerified] = useState<string>('');
+
+  const params = useParams();
+
+  const shouldVerify = useRef(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,16 +22,11 @@ export const VerifyEmail = () => {
     }
 
   }, [emailVerified]);
-
-  const params = useParams();
-
-  const shouldVerify = useRef(true);
-
   const verifyToken = async () => {
     try {
       toast.loading('Loading...');
 
-      const response = await verifyTokenCall(params.token);
+      const response = await verifyTokenCall(params.token!);
 
       if (response.data.success) {
         setEmailVerified('true');

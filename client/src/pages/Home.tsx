@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { User } from '../types/types';
+import { getUserInfoCall } from '../api/api';
 
 export const Home = () => {
   const [userInfo, setUserInfo] = useState<User>({
@@ -21,17 +22,20 @@ export const Home = () => {
       if (userToken) {
         token = JSON.parse(userToken);
       }
-      const response = await axios.get('/api/user/get-user-info', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await getUserInfoCall(token);
       toast.dismiss();
       if (response.data.success) {
         console.log(response.data.data, '!');
+
+        
         setUserInfo((prevState) => {
-          return { ...prevState, name: response.data.data.name, email: response.data.data.email };
-        });
+          
+          if(response.data.data?.name && response.data.data?.email){
+
+            return { ...prevState, name: response.data.data.name, email: response.data.data.email };
+          }
+          else return userInfo;
+          });
       } else {
         localStorage.removeItem('user');
         navigate('/login');

@@ -9,11 +9,11 @@ export async function login(loginUser: User): Promise<AuthResponse> {
   return await axios.post('api/auth/login', loginUser);
 }
 
-export async function verifyTokenCall(token: any): Promise<AuthResponse> {
+export async function verifyTokenCall(token: string): Promise<AuthResponse> {
   return await axios.post('/api/auth/verifyemail', { token });
 }
 
-export async function resetPasswordCall(password: string, token: any): Promise<AuthResponse> {
+export async function resetPasswordCall(password: string, token: string): Promise<AuthResponse> {
   return axios.post('/api/auth/resetpassword', { password, token });
 }
 
@@ -21,4 +21,14 @@ export async function sendForgotPasswordLink(email: string): Promise<AuthRespons
   return axios.post('/api/auth/send-reset-password-link', {
     email
   });
+}
+
+export async function getUserInfoCall(token: string) : Promise<AuthResponse> {
+
+  return await axios.get('/api/user/get-user-info', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
 }
